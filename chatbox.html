@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>Document</title>
+    <style>
+        #chat-container {
+            background-color: aquamarine;
+    width: 400px;
+    height: 566 px; 
+     margin: 0 auto;
+    padding: 0px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+        #chat-log {
+            background-color:rgb(127, 204, 255);
+    border: 2px solid;
+    height: 510px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0;
+    margin-bottom: 1px;
+}
+        input{
+            margin-top: 0px;
+            width: 250px;
+            height: 40px;
+            padding: 3px;
+        }
+        button{
+            background-color: aqua;
+            height: 49px;
+            width: 47px;
+        }
+        .message {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.message-content {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px 10px;
+    max-width: 70%;
+    cursor: pointer; /* Thêm CSS cho lựa chọn có thể click */
+}
+
+.user-message .message-content {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+
+
+
+
+        
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-log"></div>
+        <div id="user_input">
+        <a href=""><span class="material-symbols-rounded">
+            add_reaction
+            </span></a>
+            <a href=""><span class="material-symbols-rounded">
+                photo_library
+                </span></a>
+                <a href=""><span class="material-symbols-rounded">
+                    gif_box
+                    </span></a>
+       <input type="text" id="input-field" placeholder="Nhập tin nhắn...">
+       <button id="send-button"> Gửi</button>
+    </div>
+      
+    </div>
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+    const chatLog = document.getElementById("chat-log");
+    const inputField = document.getElementById("input-field");
+    const sendButton = document.getElementById("send-button");
+
+    sendButton.addEventListener("click", function() {
+        const userMessage = inputField.value;
+        sendMessage(userMessage);
+    });
+
+    // Tạo các tin nhắn gợi ý
+    const suggestedMessages = [
+        "Xin chào!",
+        "Thông tin sản phẩm là gì?",
+        "Bạn có sản phẩm khuyến mãi nào không?",
+        "Làm thế nào để đặt hàng?"
+    ];
+
+    // Hiển thị các tin nhắn gợi ý trong chat-log và gắn sự kiện click cho chúng
+    suggestedMessages.forEach(function(message) {
+        const suggestedMessageElement = createSuggestedMessageElement(message);
+        chatLog.appendChild(suggestedMessageElement);
+    });
+
+    function createSuggestedMessageElement(message) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.classList.add("bot-message");
+        messageElement.classList.add("suggested-message");
+
+        const messageContent = document.createElement("div");
+        messageContent.classList.add("message-content");
+        messageContent.textContent = message;
+
+        messageElement.appendChild(messageContent);
+
+        // Gắn sự kiện click cho tin nhắn gợi ý
+        messageElement.addEventListener("click", function() {
+            sendMessage(message);
+            messageElement.classList.add("selected");
+        });
+
+        return messageElement;
+    }
+
+    function sendMessage(message) {
+        displayMessage(message, "user");
+        // Xử lý logic chatbot và lấy phản hồi ở đây
+        // Ví dụ:
+        const botResponse = "Xin chào! Tôi là chatbot.";
+        displayMessage(botResponse, "bot");
+        inputField.value = "";
+    }
+
+    function displayMessage(message, sender) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.classList.add(sender + "-message");
+
+        const messageContent = document.createElement("div");
+        messageContent.classList.add("message-content");
+        messageContent.textContent = message;
+
+        messageElement.appendChild(messageContent);
+        chatLog.appendChild(messageElement);
+    }
+});
+
+
+    </script>
+</body>
+</html>
